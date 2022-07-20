@@ -1,5 +1,5 @@
 import { useState, useEffect, createRef } from 'react'
-import MapView, { Marker, PROVIDER_GOOGLE, MAP_TYPES } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import {
   StyleSheet,
   Text,
@@ -10,6 +10,11 @@ import {
   Linking,
 } from 'react-native'
 import * as Location from 'expo-location'
+import Constants from 'expo-constants'
+
+Location.setGoogleApiKey(Constants.manifest.extra.googleApiKey)
+
+var currentCoordinates
 
 export default function HomeScreen() {
   const [location, setLocation] = useState({
@@ -18,7 +23,6 @@ export default function HomeScreen() {
     latitudeDelta: 5,
     longitudeDelta: 5,
   })
-  const mapRef = createRef()
 
   const openAppSettings = () => {
     if (Platform.OS === 'ios') {
@@ -65,11 +69,72 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <MapView
-        ref={mapRef}
         mapType={Platform.OS == 'android' ? 'none' : 'standard'}
         provider={PROVIDER_GOOGLE}
         region={location}
         style={styles.map}
+        //Keeps track of the current coordinates and logs its location
+        onPress={
+          Platform.OS === 'web'
+            ? async () =>
+                console.log(
+                  await Location.reverseGeocodeAsync(currentCoordinates)
+                )
+            : async (e) => {
+                currentCoordinates = e.nativeEvent.coordinate
+                console.log(
+                  await Location.reverseGeocodeAsync(currentCoordinates)
+                )
+              }
+        }
+        onRegionChangeComplete={
+          Platform.OS === 'web'
+            ? (e) =>
+                (currentCoordinates = {
+                  latitude: e.latitude,
+                  longitude: e.longitude,
+                })
+            : null
+        }
+        options={{
+          disableDefaultUI: true,
+        }}
+        customMapStyle={[
+          {
+            featureType: 'administrative',
+            elementType: 'geometry',
+            stylers: [
+              {
+                visibility: 'off',
+              },
+            ],
+          },
+          {
+            featureType: 'poi',
+            stylers: [
+              {
+                visibility: 'off',
+              },
+            ],
+          },
+          {
+            featureType: 'road',
+            elementType: 'labels.icon',
+            stylers: [
+              {
+                visibility: 'off',
+              },
+            ],
+          },
+          {
+            featureType: 'transit',
+            stylers: [
+              {
+                visibility: 'off',
+              },
+            ],
+          },
+        ]}
       />
     </View>
   )
