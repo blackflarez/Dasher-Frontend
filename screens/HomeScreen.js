@@ -11,7 +11,7 @@ import {
 } from 'react-native'
 import * as Location from 'expo-location'
 import Constants from 'expo-constants'
-
+import { Searchbar } from 'react-native-paper'
 Location.setGoogleApiKey(Constants.manifest.extra.googleApiKey)
 
 var currentCoordinates
@@ -31,6 +31,10 @@ export default function HomeScreen() {
       RNAndroidOpenSettings.appDetailsSettings()
     }
   }
+
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const onChangeSearch = (query) => setSearchQuery(query)
 
   useEffect(() => {
     ;(async () => {
@@ -68,6 +72,12 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <Searchbar
+        placeholder="Search"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
+        style={styles.searchbar}
+      />
       <MapView
         mapType={Platform.OS == 'android' ? 'none' : 'standard'}
         provider={PROVIDER_GOOGLE}
@@ -153,5 +163,11 @@ const styles = StyleSheet.create({
   },
   errorMsg: {
     backgroundColor: 'white',
+  },
+  searchbar: {
+    position: 'absolute',
+    top: 2,
+    left: 2,
+    zIndex: 1,
   },
 })
