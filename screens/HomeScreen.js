@@ -8,15 +8,17 @@ import {
   Platform,
   Alert,
   Linking,
+  SafeAreaView,
 } from 'react-native'
 import * as Location from 'expo-location'
 import Constants from 'expo-constants'
 import { Searchbar } from 'react-native-paper'
+
 Location.setGoogleApiKey(Constants.manifest.extra.googleApiKey)
 
 var currentCoordinates
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const [location, setLocation] = useState({
     latitude: -40.86268755784721,
     longitude: 173.78307481203743,
@@ -38,6 +40,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     ;(async () => {
+      console.log('test')
       let { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         Alert.alert(
@@ -58,7 +61,6 @@ export default function HomeScreen() {
         let currentLocation = await Location.getCurrentPositionAsync({
           accuracy: Location.Accuracy.Balanced,
           enableHighAccuracy: true,
-          timeInterval: 5,
         })
         setLocation({
           latitude: currentLocation.coords.latitude,
@@ -86,13 +88,18 @@ export default function HomeScreen() {
         //Keeps track of the current coordinates and logs its location
         onPress={
           Platform.OS === 'web'
-            ? async () =>
-                console.log(
+            ? async () => {
+                await navigation.navigate('Home')
+                await navigation.navigate(
+                  'Dashboard',
                   await Location.reverseGeocodeAsync(currentCoordinates)
                 )
+              }
             : async (e) => {
                 currentCoordinates = e.nativeEvent.coordinate
-                console.log(
+                await navigation.navigate('Home')
+                await navigation.navigate(
+                  'Dashboard',
                   await Location.reverseGeocodeAsync(currentCoordinates)
                 )
               }
@@ -166,8 +173,8 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     position: 'absolute',
-    top: 2,
-    left: 2,
+    top: 75,
     zIndex: 1,
+    width: '75%',
   },
 })

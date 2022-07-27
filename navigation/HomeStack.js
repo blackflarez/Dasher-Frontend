@@ -5,40 +5,25 @@ import {
   TransitionPresets,
 } from '@react-navigation/stack'
 import HomeScreen from '../screens/HomeScreen'
+import Dashboard from '../screens/Dashboard'
+
 import { AntDesign } from '@expo/vector-icons'
-
-const Stack = createStackNavigator()
-
-var transparent = 'transparent'
-var animation = true
-
-if (Platform.OS === 'android') {
-  transparent = '#fff'
-}
-if (Platform.OS === 'web') {
-  animation = false
-}
+import { createBottomSheetNavigator } from '@th3rdwave/react-navigation-bottom-sheet'
+const BottomSheet = createBottomSheetNavigator()
 
 export default function HomeStack() {
   return (
-    <Stack.Navigator
+    <BottomSheet.Navigator
       screenOptions={{
+        snapPoints: ['40%', '95%'],
         detachPreviousScreen: false,
         headerShown: false,
-        headerTransparent: true,
         gestureEnabled: true,
         gestureDirection: 'vertical',
-        animationEnabled: animation,
-        gestureResponseDistance: 200,
-        headerBackTitleVisible: false,
-        headerBackImage: () => (
-          <AntDesign name={'down'} size={24} style={{ padding: 15 }} />
-        ),
-        headerTintColor: 'black',
-        headerStyle: { elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 },
       }}
     >
-      <Stack.Screen name="Home" component={HomeScreen} />
-    </Stack.Navigator>
+      <BottomSheet.Screen name="Home" component={HomeScreen} />
+      <BottomSheet.Screen name="Dashboard" component={Dashboard} />
+    </BottomSheet.Navigator>
   )
 }
