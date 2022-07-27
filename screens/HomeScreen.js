@@ -40,7 +40,6 @@ export default function HomeScreen({ navigation }) {
 
   useEffect(() => {
     ;(async () => {
-      console.log('test')
       let { status } = await Location.requestForegroundPermissionsAsync()
       if (status !== 'granted') {
         Alert.alert(
@@ -90,7 +89,7 @@ export default function HomeScreen({ navigation }) {
           Platform.OS === 'web'
             ? async () => {
                 await navigation.navigate('Home')
-                await navigation.navigate(
+                navigation.navigate(
                   'Dashboard',
                   await Location.reverseGeocodeAsync(currentCoordinates)
                 )
@@ -98,7 +97,7 @@ export default function HomeScreen({ navigation }) {
             : async (e) => {
                 currentCoordinates = e.nativeEvent.coordinate
                 await navigation.navigate('Home')
-                await navigation.navigate(
+                navigation.navigate(
                   'Dashboard',
                   await Location.reverseGeocodeAsync(currentCoordinates)
                 )

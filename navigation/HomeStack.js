@@ -16,7 +16,6 @@ export default function HomeStack() {
     <BottomSheet.Navigator
       screenOptions={{
         snapPoints: ['40%', '95%'],
-        detachPreviousScreen: false,
         headerShown: false,
         gestureEnabled: true,
         gestureDirection: 'vertical',
