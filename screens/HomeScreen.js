@@ -1,4 +1,4 @@
-import { useState, useEffect, createRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import {
   StyleSheet,
@@ -8,24 +8,17 @@ import {
   Platform,
   Alert,
   Linking,
-  SafeAreaView,
+  ScrollView,
 } from 'react-native'
 import * as Location from 'expo-location'
 import Constants from 'expo-constants'
-import { Searchbar } from 'react-native-paper'
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 Location.setGoogleApiKey(Constants.manifest.extra.googleApiKey)
 
 var currentCoordinates
 
 export default function HomeScreen({ navigation }) {
-  const [location, setLocation] = useState({
-    latitude: -40.86268755784721,
-    longitude: 173.78307481203743,
-    latitudeDelta: 5,
-    longitudeDelta: 5,
-  })
-
   const openAppSettings = () => {
     if (Platform.OS === 'ios') {
       Linking.openURL('app-settings:')
@@ -34,9 +27,8 @@ export default function HomeScreen({ navigation }) {
     }
   }
 
-  const [searchQuery, setSearchQuery] = useState('')
-
-  const onChangeSearch = (query) => setSearchQuery(query)
+  const searchRef = useRef()
+  const mapRef = useRef()
 
   useEffect(() => {
     ;(async () => {
@@ -61,11 +53,12 @@ export default function HomeScreen({ navigation }) {
           accuracy: Location.Accuracy.Balanced,
           enableHighAccuracy: true,
         })
-        setLocation({
+
+        mapRef.current.animateToRegion({
           latitude: currentLocation.coords.latitude,
           longitude: currentLocation.coords.longitude,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
         })
       }
     })()
@@ -73,36 +66,77 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Searchbar
-        placeholder="Search"
-        onChangeText={onChangeSearch}
-        value={searchQuery}
-        style={styles.searchbar}
-      />
+      <View style={styles.searchbar}>
+        <GooglePlacesAutocomplete
+          ref={searchRef}
+          placeholder="Search"
+          fetchDetails={true}
+          isFocused={() => {
+            navigation.navigate('Home')
+          }}
+          onPress={(data, details = null) => {
+            navigation.navigate('Home')
+            mapRef.current.animateToRegion({
+              latitude: details.geometry.location.lat,
+              longitude: details.geometry.location.lng,
+              latitudeDelta: 0.05,
+              longitudeDelta: 0.05,
+            })
+            searchRef.current.clear()
+          }}
+          query={{
+            key: Constants.manifest.extra.googleApiKey,
+            language: 'en',
+            components: 'country:nz',
+          }}
+          requestUrl={{
+            useOnPlatform: 'web', // or "all"
+            url: 'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api', // or any proxy server that hits https://maps.googleapis.com/maps/api
+          }}
+        />
+      </View>
+
       <MapView
         mapType={Platform.OS == 'android' ? 'none' : 'standard'}
         provider={PROVIDER_GOOGLE}
-        region={location}
+        initialRegion={{
+          latitude: -36.848461,
+          longitude: 174.763336,
+          latitudeDelta: 0.05,
+          longitudeDelta: 0.05,
+        }}
         style={styles.map}
+        ref={mapRef}
         //Keeps track of the current coordinates and logs its location
         onPress={
           Platform.OS === 'web'
             ? async () => {
-                await navigation.navigate('Home')
-                navigation.navigate(
-                  'Dashboard',
-                  await Location.reverseGeocodeAsync(currentCoordinates)
-                )
+                if (searchRef.current.isFocused()) {
+                  searchRef.current.blur()
+                } else {
+                  await navigation.navigate('Home')
+                  navigation.navigate(
+                    'Dashboard',
+                    await Location.reverseGeocodeAsync(currentCoordinates)
+                  )
+                }
               }
             : async (e) => {
-                currentCoordinates = e.nativeEvent.coordinate
-                await navigation.navigate('Home')
-                navigation.navigate(
-                  'Dashboard',
-                  await Location.reverseGeocodeAsync(currentCoordinates)
-                )
+                if (searchRef.current.isFocused()) {
+                  searchRef.current.blur()
+                } else {
+                  currentCoordinates = e.nativeEvent.coordinate
+                  await navigation.navigate('Home')
+                  navigation.navigate(
+                    'Dashboard',
+                    await Location.reverseGeocodeAsync(currentCoordinates)
+                  )
+                }
               }
         }
+        onRegionChange={() => {
+          navigation.navigate('Home')
+        }}
         onRegionChangeComplete={
           Platform.OS === 'web'
             ? (e) =>
@@ -166,14 +200,16 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+    zIndex: 0,
   },
   errorMsg: {
     backgroundColor: 'white',
   },
   searchbar: {
     position: 'absolute',
-    top: 75,
-    zIndex: 1,
     width: '75%',
+    zIndex: 9999,
+    top: 90,
+    alignSelf: 'center',
   },
 })

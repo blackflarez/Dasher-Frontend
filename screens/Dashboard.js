@@ -13,7 +13,11 @@ export default function Dashboard({ route, navigation }) {
         style={styles.close}
         color={'#626262'}
       />
-      <Text style={styles.title}>{route.params[1].district}</Text>
+      <Text style={styles.title}>
+        {route.params[0].district
+          ? route.params[0].district
+          : route.params[0].region}
+      </Text>
     </SafeAreaView>
   )
 }
