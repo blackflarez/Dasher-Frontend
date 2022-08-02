@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Heatmap, PROVIDER_GOOGLE } from 'react-native-maps'
 import {
   StyleSheet,
   Text,
@@ -29,6 +29,7 @@ export default function HomeScreen({ navigation }) {
 
   const searchRef = useRef()
   const mapRef = useRef()
+
 
   useEffect(() => {
     ;(async () => {
@@ -97,7 +98,6 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       <MapView
-        mapType={Platform.OS == 'android' ? 'none' : 'standard'}
         provider={PROVIDER_GOOGLE}
         initialRegion={{
           latitude: -36.848461,
@@ -184,9 +184,34 @@ export default function HomeScreen({ navigation }) {
               },
             ],
           },
-        ]}
-      />
+        ]}>
+            {Platform.OS == 'web' ? null : <Heatmap 
+            points={[
+              { latitude: -36.848461, longitude: 174.763336, weight: 2 }, 
+              { latitude: -36.906461, longitude: 174.764442, weight: 2 },
+              { latitude: -36.826461, longitude: 174.772442, weight: 2 },
+              { latitude: -36.986461, longitude: 174.794442, weight: 3 },
+              { latitude: -36.976461, longitude: 174.753332, weight: 5 },
+              { latitude: -36.806461, longitude: 174.604442, weight: 4 },
+              { latitude: -36.876663, longitude: 174.504442, weight: 4 },
+              { latitude: -36.806461, longitude: 174.764442, weight: 5 },
+              { latitude: -36.846461, longitude: 174.763332, weight: 4 },
+              { latitude: -36.876461, longitude: 174.724332, weight: 3 },
+              { latitude: -36.747461, longitude: 174.753332, weight: 3 },
+              { latitude: -36.735461, longitude: 174.763332, weight: 4 },
+              ]}
+            radius={40}
+            opacity={0.7}
+            gradient = {{
+              colors: ["purple", "red", "orange", "white"],
+              startPoints: Platform.OS === 'ios' ? [0.01, 0.04, 0.1, 0.45] :
+              [0.1, 0.25, 0.5, 0.75],
+              colorMapSize: 200
+            }}
+            />}
+      </MapView>
     </View>
+
   )
 }
 
