@@ -15,10 +15,8 @@ export default function HomeStack() {
   return (
     <BottomSheet.Navigator
       screenOptions={{
-        snapPoints: ['40%', '95%'],
-        headerShown: false,
-        gestureEnabled: true,
-        gestureDirection: 'vertical',
+        snapPoints: ['40%', '91%'],
+        style: { shadowOpacity: 0.2, shadowRadius: 20 },
       }}
     >
       <BottomSheet.Screen name="Home" component={HomeScreen} />

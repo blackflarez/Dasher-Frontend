@@ -30,7 +30,6 @@ export default function HomeScreen({ navigation }) {
   const searchRef = useRef()
   const mapRef = useRef()
 
-
   useEffect(() => {
     ;(async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
@@ -184,10 +183,12 @@ export default function HomeScreen({ navigation }) {
               },
             ],
           },
-        ]}>
-            {Platform.OS == 'web' ? null : <Heatmap 
+        ]}
+      >
+        {Platform.OS == 'web' ? null : (
+          <Heatmap
             points={[
-              { latitude: -36.848461, longitude: 174.763336, weight: 2 }, 
+              { latitude: -36.848461, longitude: 174.763336, weight: 2 },
               { latitude: -36.906461, longitude: 174.764442, weight: 2 },
               { latitude: -36.826461, longitude: 174.772442, weight: 2 },
               { latitude: -36.986461, longitude: 174.794442, weight: 3 },
@@ -199,19 +200,21 @@ export default function HomeScreen({ navigation }) {
               { latitude: -36.876461, longitude: 174.724332, weight: 3 },
               { latitude: -36.747461, longitude: 174.753332, weight: 3 },
               { latitude: -36.735461, longitude: 174.763332, weight: 4 },
-              ]}
+            ]}
             radius={40}
             opacity={0.7}
-            gradient = {{
-              colors: ["purple", "red", "orange", "white"],
-              startPoints: Platform.OS === 'ios' ? [0.01, 0.04, 0.1, 0.45] :
-              [0.1, 0.25, 0.5, 0.75],
-              colorMapSize: 200
+            gradient={{
+              colors: ['purple', 'red', 'orange', 'white'],
+              startPoints:
+                Platform.OS === 'ios'
+                  ? [0.01, 0.04, 0.1, 0.45]
+                  : [0.1, 0.25, 0.5, 0.75],
+              colorMapSize: 200,
             }}
-            />}
+          />
+        )}
       </MapView>
     </View>
-
   )
 }
 
@@ -232,9 +235,11 @@ const styles = StyleSheet.create({
   },
   searchbar: {
     position: 'absolute',
-    width: '75%',
+    width: '80%',
     zIndex: 9999,
     top: 90,
     alignSelf: 'center',
+    shadowRadius: 5,
+    shadowOpacity: 0.1,
   },
 })

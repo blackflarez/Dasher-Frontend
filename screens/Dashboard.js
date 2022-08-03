@@ -1,5 +1,18 @@
 import { StyleSheet, Text, SafeAreaView } from 'react-native'
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import { AntDesign } from '@expo/vector-icons'
+import Widget from '../components/Widget'
+
+const DATA = [
+  {
+    component: 'health',
+  },
+  {
+    component: 'Histogram',
+  },
+]
+
+const renderItem = ({ item }) => <Widget item={item.component} />
 
 export default function Dashboard({ route, navigation }) {
   return (
@@ -9,7 +22,7 @@ export default function Dashboard({ route, navigation }) {
           navigation.navigate('Home')
         }}
         name={'close'}
-        size={24}
+        size={28}
         style={styles.close}
         color={'#626262'}
       />
@@ -18,6 +31,20 @@ export default function Dashboard({ route, navigation }) {
           ? route.params[0].district
           : route.params[0].region}
       </Text>
+
+      <BottomSheetFlatList
+        data={DATA}
+        keyExtractor={(item) => item.component}
+        renderItem={renderItem}
+        style={{ marginTop: 10 }}
+        contentContainerStyle={{ alignItems: 'center' }}
+        columnWrapperStyle={{
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          marginTop: 10,
+        }}
+        numColumns={3}
+      />
     </SafeAreaView>
   )
 }
@@ -31,11 +58,13 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     marginBottom: 'auto',
     marginLeft: 20,
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
+    color: '#0083FF',
   },
   close: {
-    paddingRight: 15,
+    marginRight: 15,
     alignSelf: 'flex-end',
+    overflow: 'hidden',
   },
 })
