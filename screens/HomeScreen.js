@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import MapView, { Heatmap, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Heatmap, PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import {
   StyleSheet,
   Text,
@@ -185,10 +185,21 @@ export default function HomeScreen({ navigation }) {
           },
         ]}
       >
+        {Platform.OS == 'web'? null : (
+          <Marker
+          coordinate={{
+            latitude: -36.848461,
+            longitude: 174.763336,
+          }}
+          image ={require('../assets/marker-icon.png')}
+          title = "Current Location"
+          description="This is a test location description"
+          />
+        )}
+
         {Platform.OS == 'web' ? null : (
           <Heatmap
             points={[
-              { latitude: -36.848461, longitude: 174.763336, weight: 2 },
               { latitude: -36.906461, longitude: 174.764442, weight: 2 },
               { latitude: -36.826461, longitude: 174.772442, weight: 2 },
               { latitude: -36.986461, longitude: 174.794442, weight: 3 },
