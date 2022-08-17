@@ -80,7 +80,7 @@ const HealthWidget = ({}) => {
             color={'#262626'}
             size={18}
           />
-          <Text style={styles.title}>Health</Text>
+          <Text style={styles.title}>Air quality</Text>
           <Ionicons
             name={'help-circle-outline'}
             color={'#262626'}
@@ -108,7 +108,7 @@ const HealthWidget = ({}) => {
             color={'#262626'}
             size={18}
           />
-          <Text style={styles.title}>Health</Text>
+          <Text style={styles.title}>Air quality</Text>
           <Ionicons
             name={'help-circle-outline'}
             color={'#262626'}
