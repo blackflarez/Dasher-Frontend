@@ -17,6 +17,7 @@ export default function HomeStack() {
       screenOptions={{
         snapPoints: ['40%', '91%'],
         style: { shadowOpacity: 0.2, shadowRadius: 20 },
+        backgroundStyle: { backgroundColor: '#F9F9F9' },
       }}
     >
       <BottomSheet.Screen name="Home" component={HomeScreen} />

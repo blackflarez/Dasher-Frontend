@@ -15,10 +15,14 @@ import Constants from 'expo-constants'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
 
 Location.setGoogleApiKey(Constants.manifest.extra.googleApiKey)
-
 var currentCoordinates
 
 export default function HomeScreen({ navigation }) {
+  const [heatPoints, setHeatPoints] = useState([])
+
+  const searchRef = useRef()
+  const mapRef = useRef()
+
   const openAppSettings = () => {
     if (Platform.OS === 'ios') {
       Linking.openURL('app-settings:')
@@ -27,9 +31,7 @@ export default function HomeScreen({ navigation }) {
     }
   }
 
-  const searchRef = useRef()
-  const mapRef = useRef()
-
+  // Initialise Location
   useEffect(() => {
     ;(async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
@@ -187,20 +189,7 @@ export default function HomeScreen({ navigation }) {
       >
         {Platform.OS == 'web' ? null : (
           <Heatmap
-            points={[
-              { latitude: -36.848461, longitude: 174.763336, weight: 2 },
-              { latitude: -36.906461, longitude: 174.764442, weight: 2 },
-              { latitude: -36.826461, longitude: 174.772442, weight: 2 },
-              { latitude: -36.986461, longitude: 174.794442, weight: 3 },
-              { latitude: -36.976461, longitude: 174.753332, weight: 5 },
-              { latitude: -36.806461, longitude: 174.604442, weight: 4 },
-              { latitude: -36.876663, longitude: 174.504442, weight: 4 },
-              { latitude: -36.806461, longitude: 174.764442, weight: 5 },
-              { latitude: -36.846461, longitude: 174.763332, weight: 4 },
-              { latitude: -36.876461, longitude: 174.724332, weight: 3 },
-              { latitude: -36.747461, longitude: 174.753332, weight: 3 },
-              { latitude: -36.735461, longitude: 174.763332, weight: 4 },
-            ]}
+            points={heatPoints}
             radius={40}
             opacity={0.7}
             gradient={{
