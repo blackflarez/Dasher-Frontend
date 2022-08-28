@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
 import { useContext, useState, useEffect } from 'react'
-import { FontAwesome5, Ionicons } from '@expo/vector-icons'
+import { FontAwesome5, Ionicons, Entypo } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import AppContext from '../components/AppContext'
@@ -13,8 +13,6 @@ const HealthWidget = ({}) => {
   const [messages, setMessages] = useState()
   const [colors, setColors] = useState(['#fff'])
   const [textColor, setTextColor] = useState('#fff')
-
-  //console.log(aqi)
 
   // Initialises widget
   useEffect(() => {
@@ -72,11 +70,11 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <FontAwesome5
+          <Entypo
             onPress={() => {
               navigation.navigate('Home')
             }}
-            name={'heartbeat'}
+            name={'air'}
             color={'#262626'}
             size={18}
           />
@@ -100,11 +98,11 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <FontAwesome5
+          <Entypo
             onPress={() => {
               navigation.navigate('Home')
             }}
-            name={'heartbeat'}
+            name={'air'}
             color={'#262626'}
             size={18}
           />
@@ -128,11 +126,11 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <FontAwesome5
+          <Entypo
             onPress={() => {
               navigation.navigate('Home')
             }}
-            name={'heartbeat'}
+            name={'air'}
             color={'#262626'}
             size={18}
           />

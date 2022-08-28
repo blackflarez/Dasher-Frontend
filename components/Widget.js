@@ -1,8 +1,10 @@
 import { StyleSheet, View, Text } from 'react-native'
 import HealthWidget from './HealthWidget'
+import AverageWidget from './AverageWidget'
 
 const components = {
   health: <HealthWidget />,
+  average: <AverageWidget />,
 }
 
 const Widget = ({ onPress, item }) => {
@@ -21,7 +23,7 @@ const Widget = ({ onPress, item }) => {
 const styles = StyleSheet.create({
   containerItem: {
     width: 360,
-    height: 220,
+    height: 280,
     margin: 10,
     backgroundColor: '#fff',
     borderRadius: 25,

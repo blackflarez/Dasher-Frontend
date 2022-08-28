@@ -13,7 +13,7 @@ const DATA = [
     component: 'health',
   },
   {
-    component: 'Histogram',
+    component: 'average',
   },
 ]
 
@@ -21,18 +21,35 @@ const renderItem = ({ item }) => <Widget item={item.component} />
 
 export default function Dashboard({ route, navigation }) {
   const [aqi, setAqi] = useState(null)
-  const globalState = { aqi }
-  const date = new Date('2022-08-12T00:00:00') // Remove the string parameter to get today's date
+  const [aqiList, setAqiList] = useState([])
+  const [date, setDate] = useState(new Date('2022-08-12T08:00:00')) // Remove the string parameter to get today's date
+
+  const globalState = { aqi, date, aqiList }
+
+  const dateList = []
+  let e = date.getHours() - 6
+  for (let i = 0; i <= 12; i++) {
+    let newDate = new Date('2022-08-12T08:00:00')
+    newDate.setHours(e)
+    dateList.push(newDate)
+    e += 1
+  }
+
+  function formatDate(date) {
+    date.setMinutes(0)
+    date.setSeconds(0)
+    return date
+      .toLocaleString('sv-SE', {
+        timeZone: 'Pacific/Auckland',
+      })
+      .replace(/[T/]/g, '-')
+  }
 
   // Calls database
   useEffect(() => {
     date.setMinutes(0)
     date.setSeconds(0)
-    const formattedDate = date
-      .toLocaleString('sv-SE', {
-        timeZone: 'Pacific/Auckland',
-      })
-      .replace(/[T/]/g, '-')
+    const formattedDate = formatDate(date)
 
     async function fetchDatabase() {
       const docRef = doc(db, 'data', route.params[0].region.toLowerCase())
@@ -40,11 +57,14 @@ export default function Dashboard({ route, navigation }) {
 
       if (docSnap.exists()) {
         let data = docSnap.data()[route.params[0].district]
-        //console.log(formattedDate)
-
         if (data) {
           if (formattedDate in data) {
+            setAqiList([])
             setAqi(data[formattedDate])
+            for (let i of dateList) {
+              setAqiList((aqiList) => [...aqiList, data[formatDate(i)]])
+              setAqi(data[formattedDate])
+            }
           } else {
             setAqi('none')
           }
