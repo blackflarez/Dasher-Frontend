@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
 import { useContext, useState, useEffect } from 'react'
-import { MaterialIcons, Ionicons } from '@expo/vector-icons'
+import { MaterialIcons, Ionicons, Feather } from '@expo/vector-icons'
 import { LineChart } from 'react-native-chart-kit'
 import AppContext from '../components/AppContext'
 
@@ -12,8 +12,6 @@ const HealthWidget = ({}) => {
 
   dateMinus.setHours(date.getHours() - 6)
   datePlus.setHours(date.getHours() + 6)
-
-  //console.log(dateMinus)
 
   if (!aqi) {
     return (
@@ -94,6 +92,17 @@ const HealthWidget = ({}) => {
       </View>
 
       <View style={styles.content}>
+        <View style={styles.verticleLine} />
+        <View style={styles.bubble}>
+          <Text style={styles.bubbleTitle}>Now</Text>
+          <Text style={styles.bubbleText}>{aqi}</Text>
+        </View>
+        <View style={styles.bubbleSecondary}>
+          <Text style={styles.bubbleTitle}>Average</Text>
+          <Text style={styles.bubbleText}>{10}</Text>
+        </View>
+        <View style={styles.triangle} />
+
         <LineChart
           data={{
             datasets: [
@@ -124,7 +133,7 @@ const HealthWidget = ({}) => {
             ],
           }}
           width={350}
-          height={170}
+          height={160}
           withInnerLines={false}
           withDots={false}
           withHorizontalLines={false}
@@ -133,7 +142,7 @@ const HealthWidget = ({}) => {
           withHorizontalLabels={true}
           fromZero={true}
           chartConfig={{
-            strokeWidth: 2,
+            strokeWidth: 2.5,
             backgroundGradientFrom: '#fff',
             backgroundGradientTo: '#fff',
             fillShadowGradientTo: '#57CCFF',
@@ -146,12 +155,10 @@ const HealthWidget = ({}) => {
           }}
           bezier
           style={{
-            marginVertical: 8,
+            marginTop: 50,
             borderRadius: 16,
-            alignSelf: 'center',
           }}
         />
-
         <View
           style={{
             flexDirection: 'row',
@@ -176,6 +183,12 @@ const HealthWidget = ({}) => {
             })}
           </Text>
         </View>
+        <View style={styles.infoBox}>
+          <Feather name="info" size={18} color="5C5C5C" />
+          <Text style={styles.text}>
+            The air quality is healthy, as expected for this time of day.
+          </Text>
+        </View>
       </View>
     </View>
   )
@@ -195,7 +208,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flexDirection: 'column',
-    alignSelf: 'center',
   },
   title: { fontWeight: 'bold', marginLeft: 5, color: '#262626' },
   heading: {
@@ -203,25 +215,76 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#262626',
   },
-  aqi: {
-    fontSize: 42,
-    fontWeight: '600',
-  },
-  gradient: {
-    justifyContent: 'center',
-    borderRadius: 25,
-    overflow: 'hidden',
+  infoBox: {
+    marginTop: 25,
+    marginHorizontal: 50,
+    flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 15,
-    width: 100,
-    height: 100,
   },
-  text: { color: '#262626', marginTop: 5 },
+  text: { color: '#5C5C5C', marginLeft: 10 },
   timelineText: { color: '#0084FF', marginHorizontal: 20, fontSize: 12 },
   timelineTextCenter: {
     color: '#0084FF',
     marginHorizontal: 60,
     fontSize: 14,
+  },
+  verticleLine: {
+    height: 186,
+    width: 2.5,
+    backgroundColor: '#0084FF',
+    position: 'absolute',
+    left: 195,
+    zIndex: 1,
+  },
+  bubble: {
+    height: 40,
+    width: 70,
+    backgroundColor: '#0084FF',
+    position: 'absolute',
+    left: 160,
+    zIndex: 2,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowRadius: 10,
+    shadowOpacity: 0.2,
+  },
+  bubbleSecondary: {
+    height: 40,
+    width: 70,
+    backgroundColor: '#92D5FF',
+    position: 'absolute',
+    left: 220,
+    zIndex: 1,
+    borderBottomEndRadius: 10,
+    borderTopEndRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  triangle: {
+    position: 'absolute',
+    zIndex: 2,
+    left: 181,
+    top: 35,
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderLeftWidth: 15,
+    borderRightWidth: 15,
+    borderTopWidth: 30,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#0084FF',
+  },
+  bubbleTitle: {
+    fontSize: 11,
+    color: '#fff',
+  },
+  bubbleText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 })
 

@@ -127,6 +127,7 @@ export default function HomeScreen({ navigation }) {
                   searchRef.current.blur()
                 } else {
                   currentCoordinates = e.nativeEvent.coordinate
+                  console.log(currentCoordinates)
                   await navigation.navigate('Home')
                   navigation.navigate(
                     'Dashboard',

@@ -11,13 +11,17 @@ import Widget from '../components/Widget'
 const DATA = [
   {
     component: 'health',
+    size: 'small',
   },
   {
     component: 'average',
+    size: 'large',
   },
 ]
 
-const renderItem = ({ item }) => <Widget item={item.component} />
+const renderItem = ({ item }) => (
+  <Widget item={item.component} size={item.size} />
+)
 
 export default function Dashboard({ route, navigation }) {
   const [aqi, setAqi] = useState(null)
@@ -28,7 +32,7 @@ export default function Dashboard({ route, navigation }) {
 
   const dateList = []
   let e = date.getHours() - 6
-  for (let i = 0; i <= 12; i++) {
+  for (let i = 0; i <= 6; i++) {
     let newDate = new Date('2022-08-12T08:00:00')
     newDate.setHours(e)
     dateList.push(newDate)

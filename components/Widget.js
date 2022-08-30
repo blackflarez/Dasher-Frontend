@@ -7,10 +7,17 @@ const components = {
   average: <AverageWidget />,
 }
 
-const Widget = ({ onPress, item }) => {
+const Widget = ({ onPress, item, size }) => {
   return (
     <View
-      style={[styles.containerItem]}
+      style={[
+        styles.containerItem,
+        size == 'small'
+          ? { height: 200 }
+          : size == 'large'
+          ? { height: 350 }
+          : null,
+      ]}
       onPress={() => {
         onPress()
       }}
@@ -23,7 +30,7 @@ const Widget = ({ onPress, item }) => {
 const styles = StyleSheet.create({
   containerItem: {
     width: 360,
-    height: 280,
+    height: 360,
     margin: 10,
     backgroundColor: '#fff',
     borderRadius: 25,

@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  text: { color: '#262626', marginTop: 5 },
+  text: { color: '#5C5C5C', marginTop: 5 },
 })
 
 export default HealthWidget
