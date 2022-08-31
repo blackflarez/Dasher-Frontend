@@ -1,4 +1,4 @@
-import { StyleSheet, Text, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, SafeAreaView, View } from 'react-native'
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet'
 import { AntDesign } from '@expo/vector-icons'
 import { db } from '../config/firebase'
@@ -15,6 +15,18 @@ const DATA = [
   },
   {
     component: 'average',
+    size: 'large',
+  },
+  {
+    component: 'test',
+    size: 'small',
+  },
+  {
+    component: 'test1',
+    size: 'small',
+  },
+  {
+    component: 'test2',
     size: 'large',
   },
 ]
@@ -105,11 +117,12 @@ export default function Dashboard({ route, navigation }) {
           keyExtractor={(item) => item.component}
           renderItem={renderItem}
           style={{ marginTop: 10 }}
-          contentContainerStyle={{ alignItems: 'center' }}
+          contentContainerStyle={{}}
           columnWrapperStyle={{
             flexWrap: 'wrap',
-            justifyContent: 'center',
             marginTop: 10,
+            marginLeft: 18,
+            justifyContent: 'flex-start',
           }}
           numColumns={3}
         />

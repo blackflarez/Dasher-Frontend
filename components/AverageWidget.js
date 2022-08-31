@@ -184,7 +184,7 @@ const HealthWidget = ({}) => {
           </Text>
         </View>
         <View style={styles.infoBox}>
-          <Feather name="info" size={18} color="5C5C5C" />
+          <Feather name="info" size={18} color="#5C5C5C" />
           <Text style={styles.text}>
             The air quality is healthy, as expected for this time of day.
           </Text>

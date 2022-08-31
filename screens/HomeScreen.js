@@ -116,7 +116,7 @@ export default function HomeScreen({ navigation }) {
                   searchRef.current.blur()
                 } else {
                   await navigation.navigate('Home')
-                  navigation.navigate(
+                  await navigation.navigate(
                     'Dashboard',
                     await Location.reverseGeocodeAsync(currentCoordinates)
                   )
@@ -127,9 +127,11 @@ export default function HomeScreen({ navigation }) {
                   searchRef.current.blur()
                 } else {
                   currentCoordinates = e.nativeEvent.coordinate
-                  console.log(currentCoordinates)
+                  console.log(
+                    await Location.reverseGeocodeAsync(currentCoordinates)
+                  )
                   await navigation.navigate('Home')
-                  navigation.navigate(
+                  await navigation.navigate(
                     'Dashboard',
                     await Location.reverseGeocodeAsync(currentCoordinates)
                   )
