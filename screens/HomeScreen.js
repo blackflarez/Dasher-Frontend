@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import MapView, { Heatmap, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import {
   StyleSheet,
   Text,
@@ -116,10 +116,7 @@ export default function HomeScreen({ navigation }) {
                   searchRef.current.blur()
                 } else {
                   await navigation.navigate('Home')
-                  await navigation.navigate(
-                    'Dashboard',
-                    await Location.reverseGeocodeAsync(currentCoordinates)
-                  )
+                  await navigation.navigate('Dashboard', currentCoordinates)
                 }
               }
             : async (e) => {
@@ -127,14 +124,8 @@ export default function HomeScreen({ navigation }) {
                   searchRef.current.blur()
                 } else {
                   currentCoordinates = e.nativeEvent.coordinate
-                  console.log(
-                    await Location.reverseGeocodeAsync(currentCoordinates)
-                  )
                   await navigation.navigate('Home')
-                  await navigation.navigate(
-                    'Dashboard',
-                    await Location.reverseGeocodeAsync(currentCoordinates)
-                  )
+                  await navigation.navigate('Dashboard', currentCoordinates)
                 }
               }
         }
@@ -189,23 +180,7 @@ export default function HomeScreen({ navigation }) {
             ],
           },
         ]}
-      >
-        {Platform.OS == 'web' ? null : (
-          <Heatmap
-            points={heatPoints}
-            radius={40}
-            opacity={0.7}
-            gradient={{
-              colors: ['purple', 'red', 'orange', 'white'],
-              startPoints:
-                Platform.OS === 'ios'
-                  ? [0.01, 0.04, 0.1, 0.45]
-                  : [0.1, 0.25, 0.5, 0.75],
-              colorMapSize: 200,
-            }}
-          />
-        )}
-      </MapView>
+      ></MapView>
     </View>
   )
 }

@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons'
 import { db } from '../config/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
+import * as Location from 'expo-location'
 
 import AppContext from '../components/AppContext'
 import Widget from '../components/Widget'
@@ -39,8 +40,17 @@ export default function Dashboard({ route, navigation }) {
   const [aqi, setAqi] = useState(null)
   const [aqiList, setAqiList] = useState([])
   const [date, setDate] = useState(new Date('2022-08-12T08:00:00')) // Remove the string parameter to get today's date
+  const [currentLocation, setCurrentLocation] = useState(null)
 
   const globalState = { aqi, date, aqiList }
+
+  useEffect(() => {
+    async function init() {
+      console.log(route.params)
+      setCurrentLocation(await Location.reverseGeocodeAsync(route.params))
+    }
+    init()
+  }, [])
 
   const dateList = []
   let e = date.getHours() - 6
@@ -68,11 +78,12 @@ export default function Dashboard({ route, navigation }) {
     const formattedDate = formatDate(date)
 
     async function fetchDatabase() {
-      const docRef = doc(db, 'data', route.params[0].region.toLowerCase())
+      console.log(currentLocation)
+      const docRef = doc(db, 'data', currentLocation[0].region.toLowerCase())
       const docSnap = await getDoc(docRef)
 
       if (docSnap.exists()) {
-        let data = docSnap.data()[route.params[0].district]
+        let data = docSnap.data()[currentLocation[0].district]
         if (data) {
           if (formattedDate in data) {
             setAqiList([])
@@ -91,8 +102,15 @@ export default function Dashboard({ route, navigation }) {
         console.log('No such document!')
       }
     }
-    fetchDatabase()
-  }, [])
+
+    if (currentLocation !== null) {
+      fetchDatabase()
+    }
+  }, [currentLocation])
+
+  if (currentLocation == null) {
+    return <SafeAreaView></SafeAreaView>
+  }
 
   return (
     <AppContext.Provider value={globalState}>
@@ -107,9 +125,9 @@ export default function Dashboard({ route, navigation }) {
           color={'#626262'}
         />
         <Text style={styles.title}>
-          {route.params[0].district
-            ? route.params[0].district
-            : route.params[0].region}
+          {currentLocation[0].district
+            ? currentLocation[0].district
+            : currentLocation[0].region}
         </Text>
 
         <BottomSheetFlatList
