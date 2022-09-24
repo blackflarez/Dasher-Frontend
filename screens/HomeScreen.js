@@ -191,7 +191,6 @@ export default function HomeScreen({ navigation }) {
             latitude: -36.848461,
             longitude: 174.763336,
           }}
-          image ={require('../assets/marker-icon.png')}
           title = "Current Location"
           description="This is a test location description"
           />
