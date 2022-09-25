@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import {
   StyleSheet,
   Text,
@@ -18,7 +18,10 @@ Location.setGoogleApiKey(Constants.manifest.extra.googleApiKey)
 var currentCoordinates
 
 export default function HomeScreen({ navigation }) {
-  const [heatPoints, setHeatPoints] = useState([])
+  const [markerLocation, setMarkerLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  })
 
   const searchRef = useRef()
   const mapRef = useRef()
@@ -126,6 +129,7 @@ export default function HomeScreen({ navigation }) {
                   currentCoordinates = e.nativeEvent.coordinate
                   await navigation.navigate('Home')
                   await navigation.navigate('Dashboard', currentCoordinates)
+                  setMarkerLocation(currentCoordinates)
                 }
               }
         }
@@ -180,7 +184,19 @@ export default function HomeScreen({ navigation }) {
             ],
           },
         ]}
-      ></MapView>
+      >
+        {Platform.OS == 'web' ? null : (
+          <Marker
+            coordinate={markerLocation}
+            title={'test'}
+            animateToRegion={false}
+          >
+            <View style={{ backgroundColor: '#fff', width: 100, height: 100 }}>
+              <Text>TEST</Text>
+            </View>
+          </Marker>
+        )}
+      </MapView>
     </View>
   )
 }
