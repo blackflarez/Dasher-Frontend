@@ -190,11 +190,8 @@ export default function HomeScreen({ navigation }) {
             coordinate={markerLocation}
             title={'test'}
             animateToRegion={false}
-          >
-            <View style={{ backgroundColor: '#fff', width: 100, height: 100 }}>
-              <Text>TEST</Text>
-            </View>
-          </Marker>
+            description = "This is a test description"
+          />
         )}
       </MapView>
     </View>
