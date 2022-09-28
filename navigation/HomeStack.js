@@ -6,6 +6,7 @@ import {
 } from '@react-navigation/stack'
 import HomeScreen from '../screens/HomeScreen'
 import Dashboard from '../screens/Dashboard'
+import NoData from '../screens/NoData'
 
 import { AntDesign } from '@expo/vector-icons'
 import { createBottomSheetNavigator } from '@th3rdwave/react-navigation-bottom-sheet'
@@ -22,6 +23,7 @@ export default function HomeStack() {
     >
       <BottomSheet.Screen name="Home" component={HomeScreen} />
       <BottomSheet.Screen name="Dashboard" component={Dashboard} />
+      <BottomSheet.Screen name="NoData" component={NoData} />
     </BottomSheet.Navigator>
   )
 }

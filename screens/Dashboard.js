@@ -40,17 +40,16 @@ export default function Dashboard({ route, navigation }) {
   const [aqi, setAqi] = useState(null)
   const [aqiList, setAqiList] = useState([])
   const [date, setDate] = useState(new Date('2022-08-12T08:00:00')) // Remove the string parameter to get today's date
-  const [currentLocation, setCurrentLocation] = useState(null)
+  const [currentLocation, setCurrentLocation] = useState(route.params.location)
 
   const globalState = { aqi, date, aqiList }
 
   useEffect(() => {
     async function init() {
       console.log(route.params)
-      setCurrentLocation(await Location.reverseGeocodeAsync(route.params))
     }
     init()
-  }, [])
+  }, [currentLocation])
 
   const dateList = []
   let e = date.getHours() - 6
@@ -78,12 +77,11 @@ export default function Dashboard({ route, navigation }) {
     const formattedDate = formatDate(date)
 
     async function fetchDatabase() {
-      console.log(currentLocation)
-      const docRef = doc(db, 'data', currentLocation[0].region.toLowerCase())
+      const docRef = doc(db, 'data', 'auckland')
       const docSnap = await getDoc(docRef)
 
       if (docSnap.exists()) {
-        let data = docSnap.data()[currentLocation[0].district]
+        let data = docSnap.data()[currentLocation]
         if (data) {
           if (formattedDate in data) {
             setAqiList([])
@@ -124,11 +122,7 @@ export default function Dashboard({ route, navigation }) {
           style={styles.close}
           color={'#626262'}
         />
-        <Text style={styles.title}>
-          {currentLocation[0].district
-            ? currentLocation[0].district
-            : currentLocation[0].region}
-        </Text>
+        <Text style={styles.title}>{currentLocation}</Text>
 
         <BottomSheetFlatList
           data={DATA}

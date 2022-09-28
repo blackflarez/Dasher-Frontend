@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { PROVIDER_GOOGLE, Circle, Marker } from 'react-native-maps'
 import {
   StyleSheet,
   Text,
@@ -13,15 +13,110 @@ import {
 import * as Location from 'expo-location'
 import Constants from 'expo-constants'
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete'
+import { db } from '../config/firebase'
+import { doc, getDoc } from 'firebase/firestore'
 
 Location.setGoogleApiKey(Constants.manifest.extra.googleApiKey)
 var currentCoordinates
 
 export default function HomeScreen({ navigation }) {
   const [heatPoints, setHeatPoints] = useState([])
+  const [radiusPoints, setRadiusPoints] = useState([])
 
   const searchRef = useRef()
   const mapRef = useRef()
+  const radiusRef = useRef([])
+
+  //mobile
+  const renderCircle = (circle, index) => (
+    <View>
+      <Marker
+        coordinate={{
+          latitude: circle.coordinates.latitude,
+          longitude: circle.coordinates.longitude,
+        }}
+        image={require('../assets/datapin.png')}
+        key={circle.name}
+        onPress={async () => {
+          if (searchRef.current.isFocused()) {
+            searchRef.current.blur()
+          } else {
+            await navigation.navigate('Home')
+            let location = circle.name
+            if (location) {
+              await navigation.navigate('Dashboard', {
+                coordinates: currentCoordinates,
+                location: location,
+              })
+            } else {
+              await navigation.navigate('NoData')
+            }
+          }
+        }}
+      />
+      <Circle
+        center={{
+          latitude: circle.coordinates.latitude,
+          longitude: circle.coordinates.longitude,
+        }}
+        key={circle.name}
+        radius={2500}
+        fillColor={'rgba(0,152,255,0.3)'}
+        ref={(element) => {
+          radiusRef.current[index] = element
+        }}
+        onLayout={() =>
+          radiusRef.current[index].setNativeProps({
+            strokeColor: 'rgba(0,152,255,0.3)',
+            fillColor: 'rgba(0,152,255,0.3)',
+          })
+        }
+      />
+    </View>
+  )
+
+  //web
+  const renderDataMarker = (circle) => (
+    <MapView.Marker
+      coordinate={{
+        latitude: circle.coordinates.latitude,
+        longitude: circle.coordinates.longitude,
+      }}
+      key={circle.name}
+      onPress={async () => {
+        if (searchRef.current.isFocused()) {
+          searchRef.current.blur()
+        } else {
+          await navigation.navigate('Home')
+          let location = circle.name
+          if (location) {
+            await navigation.navigate('Dashboard', {
+              coordinates: currentCoordinates,
+              location: location,
+            })
+          } else {
+            await navigation.navigate('NoData')
+          }
+        }
+      }}
+    />
+  )
+
+  function ptInCircle(checkPoint, centerPoint, km) {
+    var ky = 40000 / 360
+    var kx = Math.cos((Math.PI * centerPoint.latitude) / 180.0) * ky
+    var dx = Math.abs(centerPoint.longitude - checkPoint.longitude) * kx
+    var dy = Math.abs(centerPoint.latitude - checkPoint.latitude) * ky
+    return Math.sqrt(dx * dx + dy * dy) <= km
+  }
+
+  function checkCoords(coordinates) {
+    for (let i of radiusPoints) {
+      if (ptInCircle(coordinates, i.coordinates, 3)) {
+        return i.name
+      }
+    }
+  }
 
   const openAppSettings = () => {
     if (Platform.OS === 'ios') {
@@ -30,6 +125,24 @@ export default function HomeScreen({ navigation }) {
       RNAndroidOpenSettings.appDetailsSettings()
     }
   }
+
+  useEffect(() => {
+    async function init() {
+      const coordinateRef = doc(db, 'coordinates', 'auckland')
+      const coordinateSnap = await getDoc(coordinateRef)
+
+      if (radiusPoints.length == 0) {
+        for (const [key, value] of Object.entries(coordinateSnap.data())) {
+          setRadiusPoints((oldArray) => [
+            ...oldArray,
+            { name: key, coordinates: value },
+          ])
+        }
+      }
+    }
+
+    init()
+  }, [])
 
   // Initialise Location
   useEffect(() => {
@@ -116,7 +229,15 @@ export default function HomeScreen({ navigation }) {
                   searchRef.current.blur()
                 } else {
                   await navigation.navigate('Home')
-                  await navigation.navigate('Dashboard', currentCoordinates)
+                  let location = checkCoords(currentCoordinates)
+                  if (location) {
+                    await navigation.navigate('Dashboard', {
+                      coordinates: currentCoordinates,
+                      location: location,
+                    })
+                  } else {
+                    await navigation.navigate('NoData')
+                  }
                 }
               }
             : async (e) => {
@@ -124,8 +245,17 @@ export default function HomeScreen({ navigation }) {
                   searchRef.current.blur()
                 } else {
                   currentCoordinates = e.nativeEvent.coordinate
+
                   await navigation.navigate('Home')
-                  await navigation.navigate('Dashboard', currentCoordinates)
+                  let location = checkCoords(currentCoordinates)
+                  if (location) {
+                    await navigation.navigate('Dashboard', {
+                      coordinates: currentCoordinates,
+                      location: location,
+                    })
+                  } else {
+                    await navigation.navigate('NoData')
+                  }
                 }
               }
         }
@@ -180,7 +310,13 @@ export default function HomeScreen({ navigation }) {
             ],
           },
         ]}
-      ></MapView>
+      >
+        {radiusPoints.length > 0 && Platform.OS !== 'web'
+          ? radiusPoints.map((circle, index) => renderCircle(circle, index))
+          : Platform.OS == 'web'
+          ? radiusPoints.map((circle) => renderDataMarker(circle))
+          : null}
+      </MapView>
     </View>
   )
 }
