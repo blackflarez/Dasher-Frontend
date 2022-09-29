@@ -29,14 +29,13 @@ export default function HomeScreen({ navigation }) {
 
   //mobile
   const renderCircle = (circle, index) => (
-    <View>
+    <View key={circle.name}>
       <Marker
         coordinate={{
           latitude: circle.coordinates.latitude,
           longitude: circle.coordinates.longitude,
         }}
         image={require('../assets/datapin.png')}
-        key={circle.name}
         onPress={async () => {
           if (searchRef.current.isFocused()) {
             searchRef.current.blur()
@@ -59,7 +58,6 @@ export default function HomeScreen({ navigation }) {
           latitude: circle.coordinates.latitude,
           longitude: circle.coordinates.longitude,
         }}
-        key={circle.name}
         radius={2500}
         fillColor={'rgba(0,152,255,0.3)'}
         ref={(element) => {
