@@ -20,12 +20,19 @@ Location.setGoogleApiKey(Constants.manifest.extra.googleApiKey)
 var currentCoordinates
 
 export default function HomeScreen({ navigation }) {
-  const [heatPoints, setHeatPoints] = useState([])
+  const [markerLocation, setMarkerLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  })
   const [radiusPoints, setRadiusPoints] = useState([])
 
   const searchRef = useRef()
   const mapRef = useRef()
   const radiusRef = useRef([])
+
+  useEffect(() => {
+    console.log(markerLocation)
+  }, [markerLocation])
 
   //mobile
   const renderCircle = (circle, index) => (
@@ -59,14 +66,14 @@ export default function HomeScreen({ navigation }) {
           longitude: circle.coordinates.longitude,
         }}
         radius={2500}
-        fillColor={'rgba(0,152,255,0.3)'}
+        fillColor={'rgba(0,152,255,0.2)'}
         ref={(element) => {
           radiusRef.current[index] = element
         }}
         onLayout={() =>
           radiusRef.current[index].setNativeProps({
-            strokeColor: 'rgba(0,152,255,0.3)',
-            fillColor: 'rgba(0,152,255,0.3)',
+            strokeColor: 'rgba(0,152,255,0.2)',
+            fillColor: 'rgba(0,152,255,0.2)',
           })
         }
       />
@@ -210,7 +217,7 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       <MapView
-        provider={PROVIDER_GOOGLE}
+        //provider={PROVIDER_GOOGLE}
         initialRegion={{
           latitude: -36.848461,
           longitude: 174.763336,
@@ -246,6 +253,7 @@ export default function HomeScreen({ navigation }) {
 
                   await navigation.navigate('Home')
                   let location = checkCoords(currentCoordinates)
+                  setMarkerLocation(currentCoordinates)
                   if (location) {
                     await navigation.navigate('Dashboard', {
                       coordinates: currentCoordinates,
@@ -309,6 +317,16 @@ export default function HomeScreen({ navigation }) {
           },
         ]}
       >
+        {Platform.OS == 'web' ? null : (
+          <Marker
+            coordinate={markerLocation}
+            animateToRegion={false}
+            tappable={false}
+            image={require('../assets/pindrop.png')}
+            zIndex={10}
+          />
+        )}
+
         {radiusPoints.length > 0 && Platform.OS !== 'web'
           ? radiusPoints.map((circle, index) => renderCircle(circle, index))
           : Platform.OS == 'web'
