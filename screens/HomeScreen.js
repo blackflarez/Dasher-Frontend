@@ -188,9 +188,8 @@ export default function HomeScreen({ navigation }) {
         {Platform.OS == 'web' ? null : (
           <Marker
             coordinate={markerLocation}
-            title={'test'}
             animateToRegion={false}
-            description = "This is a test description"
+            tappable={false}
           />
         )}
       </MapView>
