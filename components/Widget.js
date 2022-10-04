@@ -1,10 +1,12 @@
 import { StyleSheet, View, Text } from 'react-native'
 import HealthWidget from './HealthWidget'
 import AverageWidget from './AverageWidget'
+import DescriptionWidget from './DescriptionWidget'
 
 const components = {
   health: <HealthWidget />,
   average: <AverageWidget />,
+  description: <DescriptionWidget />,
 }
 
 const Widget = ({ onPress, item, size }) => {
