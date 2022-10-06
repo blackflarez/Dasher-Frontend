@@ -5,6 +5,7 @@ export default {
     name: 'dasher-frontend',
     slug: 'dasher-frontend',
     version: '1.0.0',
+    owner: 'dasherair',
     orientation: 'portrait',
     icon: './assets/icon.png',
     userInterfaceStyle: 'light',
