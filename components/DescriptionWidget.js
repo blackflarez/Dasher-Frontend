@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
 import { useContext, useState, useEffect } from 'react'
-import { FontAwesome5, Ionicons, Entypo } from '@expo/vector-icons'
+import { AntDesign, Ionicons, Entypo } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
 const DescriptionWidget = ({}) => {
@@ -11,7 +11,7 @@ const DescriptionWidget = ({}) => {
           onPress={() => {
             navigation.navigate('Home')
           }}
-          name={'code'}
+          name={'info'}
           color={'#262626'}
           size={18}
         />
