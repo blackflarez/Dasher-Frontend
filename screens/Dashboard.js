@@ -19,16 +19,8 @@ const DATA = [
     size: 'large',
   },
   {
-    component: 'test',
+    component: 'description',
     size: 'small',
-  },
-  {
-    component: 'test1',
-    size: 'small',
-  },
-  {
-    component: 'test2',
-    size: 'large',
   },
 ]
 
@@ -147,6 +139,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F9F9F9',
+    marginBottom: 30,
   },
   title: {
     alignItems: 'flex-start',
