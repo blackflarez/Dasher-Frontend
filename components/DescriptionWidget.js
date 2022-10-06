@@ -26,7 +26,10 @@ const DescriptionWidget = ({}) => {
 
       <View style={styles.body}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.text}>Blah blah</Text>
+          <Text style={styles.text}>The AQI is calculated from air quality data 
+          relating to the five pollutants that are monitored in the ACT. For each pollutant, 
+          the AQI is the data value expressed as percentage of the level specified by the 
+          National Environment Protection Measure for Ambient Air (NEPM) standard. </Text>
         </View>
       </View>
     </View>
