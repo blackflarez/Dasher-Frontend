@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F9F9F9',
+    marginBottom: 30,
   },
   title: {
     alignItems: 'flex-start',
