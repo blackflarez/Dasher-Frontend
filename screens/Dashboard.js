@@ -26,10 +26,6 @@ const DATA = [
     component: 'average',
     size: 'large',
   },
-  {
-    component: 'formula',
-    size: 'large',
-  }
 ]
 
 const renderItem = ({ item }) => (
