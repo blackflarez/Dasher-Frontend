@@ -15,16 +15,16 @@ const DATA = [
     size: 'small',
   },
   {
+    component: 'average',
+    size: 'large',
+  },
+  {
     component: 'description',
     size: 'small',
   },
   {
     component: 'reference',
-    size: 'small',
-  },
-  {
-    component: 'average',
-    size: 'large',
+    size: 'medium',
   },
 ]
 

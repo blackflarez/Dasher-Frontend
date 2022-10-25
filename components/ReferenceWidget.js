@@ -27,8 +27,10 @@ const ReferenceWidget = ({}) => {
       <View style={styles.body}>
         <View style={{ flex: 1 }}>
           <Text style={styles.text}>
-            Based on PM2.5, PM10 data collected in Takapuna, Auckland, converted to AQI.
-            
+          At places all around the region, Auckland Council keeps an eye on the air quality. 
+          They have one of the most extensive collections of air quality data in New Zealand, with some of their data sets dating back to the 1960s. 
+          Assessment of conformity with the National Environmental Standards for Air Quality is done using data from their monitoring network (NES-AQ).
+
           </Text>
         </View>
       </View>
