@@ -1,21 +1,21 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
 import { useContext, useState, useEffect } from 'react'
-import { MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons'
+import { Octicons, Ionicons, Entypo } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
-const DescriptionWidget = ({}) => {
+const ReferenceWidget = ({}) => {
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        <MaterialIcons
+        <Octicons
           onPress={() => {
-            navigation.navigate('Home')
+            navigation.navigate('https://environmentauckland.org.nz/Data/Dashboard/183')
           }}
-          name={'perm-device-information'}
+          name={'cross-reference'}
           color={'#262626'}
-          size={22}
+          size={18}
         />
-        <Text style={styles.title}>How we collect our data</Text>
+        <Text style={styles.title}>Environment Auckland</Text>
         <Ionicons
           name={'help-circle-outline'}
           color={'#262626'}
@@ -27,11 +27,8 @@ const DescriptionWidget = ({}) => {
       <View style={styles.body}>
         <View style={{ flex: 1 }}>
           <Text style={styles.text}>
-            We gathered out data from various environmental monitoring sites
-            around New Zealand. This air quality data is measured in PM10
-            (Particulate Matter), which is the concentration of particles 10
-            microns or less. These are able to be inhaled into the lungs by
-            which can impact our health in a negative manner.
+            Based on PM2.5, PM10 data collected in Takapuna, Auckland, converted to AQI.
+            
           </Text>
         </View>
       </View>
@@ -73,4 +70,4 @@ const styles = StyleSheet.create({
   text: { color: '#5C5C5C', marginTop: 5 },
 })
 
-export default DescriptionWidget
+export default ReferenceWidget
