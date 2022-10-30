@@ -16,9 +16,7 @@ const ReferenceWidget = ({}) => {
         <View style={{ flex: 1 }}>
           <SourceButton
             title={'Environment Auckland'}
-            description={
-              'Based on PM2.5, PM10 data collected in Takapuna, Auckland, converted to AQI.'
-            }
+            description={'Based on PM10 data collected in Auckland.'}
             onPress={() => {
               Linking.openURL('https://environmentauckland.org.nz')
             }}
