@@ -1,37 +1,28 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
-import { useContext, useState, useEffect } from 'react'
-import { Octicons, Ionicons, Entypo } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
+import * as Linking from 'expo-linking'
+import { Foundation } from '@expo/vector-icons'
+
+import SourceButton from './SourceButton'
 
 const ReferenceWidget = ({}) => {
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        <Octicons
-          onPress={() => {
-            navigation.navigate('https://environmentauckland.org.nz/Data/Dashboard/183')
-          }}
-          name={'cross-reference'}
-          color={'#262626'}
-          size={18}
-        />
-        <Text style={styles.title}>Environment Auckland</Text>
-        <Ionicons
-          name={'help-circle-outline'}
-          color={'#262626'}
-          size={24}
-          style={{ marginLeft: 'auto' }}
-        />
+        <Foundation name={'page-search'} color={'#262626'} size={18} />
+        <Text style={styles.title}>Sources</Text>
       </View>
 
       <View style={styles.body}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.text}>
-          At places all around the region, Auckland Council keeps an eye on the air quality. 
-          They have one of the most extensive collections of air quality data in New Zealand, with some of their data sets dating back to the 1960s. 
-          Assessment of conformity with the National Environmental Standards for Air Quality is done using data from their monitoring network (NES-AQ).
-
-          </Text>
+          <SourceButton
+            title={'Environment Auckland'}
+            description={
+              'Based on PM2.5, PM10 data collected in Takapuna, Auckland, converted to AQI.'
+            }
+            onPress={() => {
+              Linking.openURL('https://environmentauckland.org.nz')
+            }}
+          />
         </View>
       </View>
     </View>
@@ -49,6 +40,7 @@ const styles = StyleSheet.create({
   body: {
     flexDirection: 'row',
     paddingHorizontal: 20,
+    justifyContent: 'center',
   },
   title: { fontWeight: 'bold', marginLeft: 5, color: '#262626' },
   heading: {

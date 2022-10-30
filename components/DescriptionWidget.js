@@ -1,27 +1,18 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
 import { useContext, useState, useEffect } from 'react'
-import { MaterialIcons, Ionicons, Entypo } from '@expo/vector-icons'
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
 const DescriptionWidget = ({}) => {
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        <MaterialIcons
-          onPress={() => {
-            navigation.navigate('Home')
-          }}
-          name={'perm-device-information'}
+        <MaterialCommunityIcons
+          name={'information-variant'}
           color={'#262626'}
           size={22}
         />
         <Text style={styles.title}>How we collect our data</Text>
-        <Ionicons
-          name={'help-circle-outline'}
-          color={'#262626'}
-          size={24}
-          style={{ marginLeft: 'auto' }}
-        />
       </View>
 
       <View style={styles.body}>

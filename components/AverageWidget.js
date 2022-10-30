@@ -17,21 +17,8 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <MaterialIcons
-            onPress={() => {
-              navigation.navigate('Home')
-            }}
-            name={'show-chart'}
-            color={'#262626'}
-            size={18}
-          />
+          <MaterialIcons name={'show-chart'} color={'#262626'} size={18} />
           <Text style={styles.title}>Average</Text>
-          <Ionicons
-            name={'help-circle-outline'}
-            color={'#262626'}
-            size={24}
-            style={{ marginLeft: 'auto' }}
-          />
         </View>
 
         <View style={styles.body}>
@@ -45,21 +32,8 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <MaterialIcons
-            onPress={() => {
-              navigation.navigate('Home')
-            }}
-            name={'show-chart'}
-            color={'#262626'}
-            size={18}
-          />
+          <MaterialIcons name={'show-chart'} color={'#262626'} size={18} />
           <Text style={styles.title}>Average</Text>
-          <Ionicons
-            name={'help-circle-outline'}
-            color={'#262626'}
-            size={24}
-            style={{ marginLeft: 'auto' }}
-          />
         </View>
 
         <View style={styles.body}>
@@ -74,21 +48,8 @@ const HealthWidget = ({}) => {
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        <MaterialIcons
-          onPress={() => {
-            navigation.navigate('Home')
-          }}
-          name={'show-chart'}
-          color={'#262626'}
-          size={18}
-        />
+        <MaterialIcons name={'show-chart'} color={'#262626'} size={18} />
         <Text style={styles.title}>Average</Text>
-        <Ionicons
-          name={'help-circle-outline'}
-          color={'#262626'}
-          size={24}
-          style={{ marginLeft: 'auto' }}
-        />
       </View>
 
       <View style={styles.content}>

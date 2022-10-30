@@ -24,7 +24,7 @@ const DATA = [
   },
   {
     component: 'reference',
-    size: 'medium',
+    size: 'small',
   },
 ]
 
