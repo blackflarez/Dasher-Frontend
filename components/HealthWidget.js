@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
 import { useContext, useState, useEffect } from 'react'
-import { FontAwesome5, Ionicons, Entypo } from '@expo/vector-icons'
+import { Ionicons, Entypo } from '@expo/vector-icons'
 import { LinearGradient } from 'expo-linear-gradient'
 
 import AppContext from '../components/AppContext'
@@ -70,14 +70,7 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <Entypo
-            onPress={() => {
-              navigation.navigate('Home')
-            }}
-            name={'air'}
-            color={'#262626'}
-            size={18}
-          />
+          <Entypo name={'air'} color={'#262626'} size={18} />
           <Text style={styles.title}>Air quality</Text>
           <Ionicons
             name={'help-circle-outline'}
@@ -98,21 +91,8 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <Entypo
-            onPress={() => {
-              navigation.navigate('Home')
-            }}
-            name={'air'}
-            color={'#262626'}
-            size={18}
-          />
+          <Entypo name={'air'} color={'#262626'} size={18} />
           <Text style={styles.title}>Air quality</Text>
-          <Ionicons
-            name={'help-circle-outline'}
-            color={'#262626'}
-            size={24}
-            style={{ marginLeft: 'auto' }}
-          />
         </View>
 
         <View style={styles.body}>
@@ -126,21 +106,8 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <Entypo
-            onPress={() => {
-              navigation.navigate('Home')
-            }}
-            name={'air'}
-            color={'#262626'}
-            size={18}
-          />
+          <Entypo name={'air'} color={'#262626'} size={18} />
           <Text style={styles.title}>Air quality</Text>
-          <Ionicons
-            name={'help-circle-outline'}
-            color={'#262626'}
-            size={24}
-            style={{ marginLeft: 'auto' }}
-          />
         </View>
 
         <View style={styles.body}>

@@ -1,29 +1,28 @@
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native'
-import { useContext, useState, useEffect } from 'react'
-import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
-import { LinearGradient } from 'expo-linear-gradient'
+import * as Linking from 'expo-linking'
+import { Foundation } from '@expo/vector-icons'
 
-const DescriptionWidget = ({}) => {
+import SourceButton from './SourceButton'
+
+const ReferenceWidget = ({}) => {
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        <MaterialCommunityIcons
-          name={'information-variant'}
-          color={'#262626'}
-          size={22}
-        />
-        <Text style={styles.title}>How we collect our data</Text>
+        <Foundation name={'page-search'} color={'#262626'} size={18} />
+        <Text style={styles.title}>Sources</Text>
       </View>
 
       <View style={styles.body}>
         <View style={{ flex: 1 }}>
-          <Text style={styles.text}>
-            We gathered out data from various environmental monitoring sites
-            around New Zealand. This air quality data is measured in PM10
-            (Particulate Matter), which is the concentration of particles 10
-            microns or less. These are able to be inhaled into the lungs by
-            which can impact our health in a negative manner.
-          </Text>
+          <SourceButton
+            title={'Environment Auckland'}
+            description={
+              'Based on PM2.5, PM10 data collected in Takapuna, Auckland, converted to AQI.'
+            }
+            onPress={() => {
+              Linking.openURL('https://environmentauckland.org.nz')
+            }}
+          />
         </View>
       </View>
     </View>
@@ -41,6 +40,7 @@ const styles = StyleSheet.create({
   body: {
     flexDirection: 'row',
     paddingHorizontal: 20,
+    justifyContent: 'center',
   },
   title: { fontWeight: 'bold', marginLeft: 5, color: '#262626' },
   heading: {
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   text: { color: '#5C5C5C', marginTop: 5 },
 })
 
-export default DescriptionWidget
+export default ReferenceWidget

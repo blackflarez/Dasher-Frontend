@@ -22,6 +22,10 @@ const DATA = [
     component: 'description',
     size: 'small',
   },
+  {
+    component: 'reference',
+    size: 'small',
+  },
 ]
 
 const renderItem = ({ item }) => (
