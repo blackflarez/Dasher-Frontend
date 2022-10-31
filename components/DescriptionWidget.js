@@ -9,7 +9,7 @@ const DescriptionWidget = ({}) => {
       <View style={styles.header}>
         <MaterialCommunityIcons
           name={'information-variant'}
-          color={'#262626'}
+          color={'#0084FF'}
           size={22}
         />
         <Text style={styles.title}>How we collect our data</Text>
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 20,
   },
-  title: { fontWeight: 'bold', marginLeft: 5, color: '#262626' },
+  title: { fontWeight: 'bold', marginLeft: 5, color: '#0084FF' },
   heading: {
     fontWeight: '600',
     fontSize: 24,

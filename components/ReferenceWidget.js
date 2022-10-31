@@ -8,7 +8,7 @@ const ReferenceWidget = ({}) => {
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        <Foundation name={'page-search'} color={'#262626'} size={18} />
+        <Foundation name={'page-search'} color={'#0084FF'} size={18} />
         <Text style={styles.title}>Sources</Text>
       </View>
 
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'center',
   },
-  title: { fontWeight: 'bold', marginLeft: 5, color: '#262626' },
+  title: { fontWeight: 'bold', marginLeft: 5, color: '#0084FF' },
   heading: {
     fontWeight: '600',
     fontSize: 24,

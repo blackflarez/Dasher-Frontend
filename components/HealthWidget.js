@@ -23,8 +23,8 @@ const HealthWidget = ({}) => {
           setMessages(
             'feel free to enjoy outdoor activities, this poses little or no health risk.'
           )
-          setColors(['#A7E67B', '#89D852', '#6CB836'])
-          setTextColor('#030303')
+          setColors(['#92D5FF', '#0084FF'])
+          setTextColor('#FCFCFC')
         } else if (aqi > 54 && aqi <= 154) {
           setHealthIndicator('Moderate')
           setMessages(
@@ -70,7 +70,7 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <Entypo name={'air'} color={'#262626'} size={18} />
+          <Entypo name={'air'} color={'#0084FF'} size={18} />
           <Text style={styles.title}>Air quality</Text>
           <Ionicons
             name={'help-circle-outline'}
@@ -91,7 +91,7 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <Entypo name={'air'} color={'#262626'} size={18} />
+          <Entypo name={'air'} color={'#0084FF'} size={18} />
           <Text style={styles.title}>Air quality</Text>
         </View>
 
@@ -106,7 +106,7 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <Entypo name={'air'} color={'#262626'} size={18} />
+          <Entypo name={'air'} color={'#0084FF'} size={18} />
           <Text style={styles.title}>Air quality</Text>
         </View>
 
@@ -138,11 +138,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 20,
   },
-  title: { fontWeight: 'bold', marginLeft: 5, color: '#262626' },
+  title: { fontWeight: 'bold', marginLeft: 5, color: '#0084FF' },
   heading: {
     fontWeight: '600',
     fontSize: 24,
-    color: '#262626',
+    color: '#0084FF',
   },
   aqi: {
     fontSize: 42,

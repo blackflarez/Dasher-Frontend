@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     fontSize: 26,
     fontWeight: 'bold',
-    color: '#262626',
+    color: '#0084FF',
   },
   close: {
     marginRight: 15,

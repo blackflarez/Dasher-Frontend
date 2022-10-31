@@ -17,7 +17,7 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <MaterialIcons name={'show-chart'} color={'#262626'} size={18} />
+          <MaterialIcons name={'show-chart'} color={'#0084FF'} size={18} />
           <Text style={styles.title}>Average</Text>
         </View>
 
@@ -32,7 +32,7 @@ const HealthWidget = ({}) => {
     return (
       <View style={[styles.container]}>
         <View style={styles.header}>
-          <MaterialIcons name={'show-chart'} color={'#262626'} size={18} />
+          <MaterialIcons name={'show-chart'} color={'#0084FF'} size={18} />
           <Text style={styles.title}>Average</Text>
         </View>
 
@@ -48,7 +48,7 @@ const HealthWidget = ({}) => {
   return (
     <View style={[styles.container]}>
       <View style={styles.header}>
-        <MaterialIcons name={'show-chart'} color={'#262626'} size={18} />
+        <MaterialIcons name={'show-chart'} color={'#0084FF'} size={18} />
         <Text style={styles.title}>Average</Text>
       </View>
 
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   content: {
     flexDirection: 'column',
   },
-  title: { fontWeight: 'bold', marginLeft: 5, color: '#262626' },
+  title: { fontWeight: 'bold', marginLeft: 5, color: '#0084FF' },
   heading: {
     fontWeight: '600',
     fontSize: 24,
